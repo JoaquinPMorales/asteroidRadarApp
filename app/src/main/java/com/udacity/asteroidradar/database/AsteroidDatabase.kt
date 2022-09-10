@@ -6,19 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 /**
- * A database that stores SleepNight information.
+ * A database that stores Asteroids information.
  * And a global method to get access to the database.
  *
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [SleepNight::class], version = 1, exportSchema = false)
+@Database(entities = [Asteroid::class], version = 1, exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
 
     /**
      * Connects the database to the DAO.
      */
-    abstract val sleepDatabaseDao: SleepDatabaseDao
+    abstract val asteroidDatabaseDao: AsteroidDatabaseDao
 
     /**
      * Define a companion object, this allows us to add functions on the SleepDatabase class.
@@ -37,7 +37,7 @@ abstract class AsteroidDatabase : RoomDatabase() {
          *  thread to shared data are visible to other threads.
          */
         @Volatile
-        private var INSTANCE: SleepDatabase? = null
+        private var INSTANCE: AsteroidDatabase? = null
 
         /**
          * Helper function to get the database.
@@ -56,7 +56,7 @@ abstract class AsteroidDatabase : RoomDatabase() {
          *
          * @param context The application context Singleton, used to get access to the filesystem.
          */
-        fun getInstance(context: Context): SleepDatabase {
+        fun getInstance(context: Context): AsteroidDatabase {
             // Multiple threads can ask for the database at the same time, ensure we only initialize
             // it once by using synchronized. Only one thread may enter a synchronized block at a
             // time.
@@ -68,8 +68,8 @@ abstract class AsteroidDatabase : RoomDatabase() {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        SleepDatabase::class.java,
-                        "sleep_history_database"
+                        AsteroidDatabase::class.java,
+                        "asteroid_radar_table"
                     )
                         // Wipes and rebuilds instead of migrating if no Migration object.
                         // Migration is not part of this lesson. You can learn more about

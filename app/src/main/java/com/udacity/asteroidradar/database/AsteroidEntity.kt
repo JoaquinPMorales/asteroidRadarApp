@@ -5,9 +5,25 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "asteroid_radar_table")
-data class AsteroidEntity(
-    @PrimaryKey
-    var asteroidId : Long = 0L,
+data class Asteroid(
+    @PrimaryKey(autoGenerate = false)
+    var asteroidId: Long = 0L,
 
-    @ColumnInfo(name = "")
+    @ColumnInfo(name = "close_approach_date")
+    var closeApproachDate: String = "",
+
+    @ColumnInfo(name = "absolute_magnitude")
+    var absoluteMagnitude: Double = 0.0,
+
+    @ColumnInfo(name = "estimated_diameter")
+    var estimatedDiameter: Double = 0.0,
+
+    @ColumnInfo(name = "relative_velocity")
+    var relativeVelocity: Double = 0.0,
+
+    @ColumnInfo(name = "distance_from_earth")
+    var distanceFromEarth: Double = 0.0,
+
+    @ColumnInfo(name = "is_potentially_hazardous")
+    var isPotentiallyHazardous: Boolean = false
 )

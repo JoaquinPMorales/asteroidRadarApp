@@ -1,10 +1,7 @@
 package com.udacity.asteroidradar.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 /**
  * Defines methods for using the SleepNight class with Room.
@@ -12,32 +9,32 @@ import androidx.room.Update
 @Dao
 interface AsteroidDatabaseDao {
 
-    @Insert
-    suspend fun insert(night: SleepNight)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(asteroid: Asteroid)
 
     /**
      * When updating a row with a value already set in a column,
      * replaces the old value with the new one.
      *
-     * @param night new value to write
+     * @param asteroid new value to write
      */
-    @Update
-    suspend fun update(night: SleepNight)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(asteroid: Asteroid)
 
     /**
-     * Selects and returns the row that matches the supplied start time, which is our key.
+     * Selects and returns the row that matches the asteroidId, which is our key.
      *
-     * @param key startTimeMilli to match
+     * @param key asteroidId to match
      */
-    @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
-    suspend fun get(key: Long): SleepNight?
+    @Query("SELECT * from asteroid_radar_table WHERE asteroidId = :key")
+    suspend fun get(key: Long): Asteroid?
 
     /**
      * Deletes all values from the table.
      *
      * This does not delete the table, only its contents.
      */
-    @Query("DELETE FROM daily_sleep_quality_table")
+    @Query("DELETE FROM asteroid_radar_table")
     suspend fun clear()
 
     /**
@@ -45,19 +42,13 @@ interface AsteroidDatabaseDao {
      *
      * sorted by start time in descending order.
      */
-    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC")
-    fun getAllNights(): LiveData<List<SleepNight>>
+    @Query("SELECT * FROM asteroid_radar_table ORDER BY close_approach_date DESC")
+    fun getAllAsteroids(): LiveData<List<Asteroid>>
 
     /**
-     * Selects and returns the latest night.
+     * Selects and returns the asteroid with given asteroidId.
      */
-    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
-    suspend fun getTonight(): SleepNight?
-
-    /**
-     * Selects and returns the night with given nightId.
-     */
-    @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
-    fun getNightWithId(key: Long): LiveData<SleepNight>
+    @Query("SELECT * from asteroid_radar_table WHERE asteroidId = :key")
+    fun getAsteroidWithId(key: Long): LiveData<Asteroid>
 }
 
