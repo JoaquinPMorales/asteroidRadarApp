@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
                 //Add the asteroids
-                asteroidAdapter.data = it
+                asteroidAdapter.submitList(it)
             }
         })
 
