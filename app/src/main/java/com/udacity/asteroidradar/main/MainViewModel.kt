@@ -13,4 +13,16 @@ class MainViewModel(val database: AsteroidDatabaseDao,
 
     val asteroids = database.getAllAsteroids()
 
+    private val _navigateToAsteroidDetail = MutableLiveData<Long>()
+    val navigateToAsteroidDetail
+        get() = _navigateToAsteroidDetail
+
+    fun onAsteroidDetailClicked(id: Long) {
+        _navigateToAsteroidDetail.value = id
+    }
+
+    fun onAsteroidDetailNavigated() {
+        _navigateToAsteroidDetail.value = null
+    }
+
 }
