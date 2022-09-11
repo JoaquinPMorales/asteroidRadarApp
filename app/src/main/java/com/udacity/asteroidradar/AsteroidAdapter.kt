@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,20 +30,28 @@ class AsteroidAdapter : RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //Retrieve the item from the data list
         val item = data[position]
-        val res = holder.itemView.context.resources
-        holder.date.text = data.get(position).closeApproachDate
-        holder.asteroidName.text = data.get(position).asteroidId.toString()
+        holder.bind(item)
 
-        holder.hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
-            false -> R.drawable.ic_status_normal
-            true -> R.drawable.ic_status_potentially_hazardous
-        })
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+        val res = itemView.context.resources
+
         val date: TextView = itemView.findViewById(R.id.asteroid_date_string)
         val asteroidName: TextView = itemView.findViewById(R.id.asteroid_name_string)
         val hazardousImage: ImageView = itemView.findViewById(R.id.hazardous_image)
+
+        fun bind(item: Asteroid, res: Resources)
+        {
+            date.text = item.closeApproachDate
+            asteroidName.text = item.asteroidId.toString()
+
+            hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
+                false -> R.drawable.ic_status_normal
+                true -> R.drawable.ic_status_potentially_hazardous
+            })
+        }
     }
 
 }
