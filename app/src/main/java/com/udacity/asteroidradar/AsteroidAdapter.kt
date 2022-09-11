@@ -31,11 +31,11 @@ class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(Astero
             val res = itemView.context.resources
             binding.asteroidDateString.text = item.closeApproachDate
             binding.asteroidNameString.text = item.asteroidId.toString()
-
-            binding.hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
+            binding.executePendingBindings()
+            /*binding.hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
                 false -> R.drawable.ic_status_normal
                 true -> R.drawable.ic_status_potentially_hazardous
-            })
+            })*/
         }
 
         companion object{
