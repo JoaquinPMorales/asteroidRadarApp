@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="sleep"
+            name="asteroid"
             type="com.udacity.asteroidradar.database.Asteroid" />
 <!--        <variable-->
 <!--            name="clickListener"-->
