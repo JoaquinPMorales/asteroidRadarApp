@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.database.Asteroid
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 
-class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {
+class AsteroidAdapter(val clickListener: AsteroidListener) : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -21,16 +21,17 @@ class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(Astero
     override fun onBindViewHolder(holder: AsteroidAdapter.ViewHolder, position: Int) {
         //Retrieve the item from the data list
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(clickListener, getItem(position)!!)
     }
 
     class ViewHolder private constructor (val binding: AsteroidItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Asteroid)
+        fun bind(clickListener: AsteroidListener, item: Asteroid)
         {
             val res = itemView.context.resources
             binding.asteroidDateString.text = item.closeApproachDate
             binding.asteroidNameString.text = item.asteroidId.toString()
+            binding.clickListener = clickListener
             binding.executePendingBindings()
             /*binding.hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
                 false -> R.drawable.ic_status_normal
@@ -56,4 +57,8 @@ class AsteroidAdapter : ListAdapter<Asteroid, AsteroidAdapter.ViewHolder>(Astero
             return oldItem == newItem
         }
     }
+}
+
+class AsteroidListener(val clickListener: (asteroidId: Long) -> Unit) {
+    fun onClick(asteroid: Asteroid) = clickListener(asteroid.asteroidId)
 }
