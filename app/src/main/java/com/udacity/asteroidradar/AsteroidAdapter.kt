@@ -22,9 +22,7 @@ class AsteroidAdapter : RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.asteroid_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,6 +49,14 @@ class AsteroidAdapter : RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
                 false -> R.drawable.ic_status_normal
                 true -> R.drawable.ic_status_potentially_hazardous
             })
+        }
+
+        companion object{
+            fun from(parent: ViewGroup): ViewHolder{
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = layoutInflater.inflate(R.layout.asteroid_item, parent, false)
+                return ViewHolder(view)
+            }
         }
     }
 
