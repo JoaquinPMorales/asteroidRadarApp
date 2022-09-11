@@ -42,7 +42,7 @@ class AsteroidAdapter : RecyclerView.Adapter<AsteroidAdapter.ViewHolder>() {
         val asteroidName: TextView = itemView.findViewById(R.id.asteroid_name_string)
         val hazardousImage: ImageView = itemView.findViewById(R.id.hazardous_image)
 
-        fun bind(item: Asteroid, res: Resources)
+        fun bind(item: Asteroid)
         {
             date.text = item.closeApproachDate
             asteroidName.text = item.asteroidId.toString()
