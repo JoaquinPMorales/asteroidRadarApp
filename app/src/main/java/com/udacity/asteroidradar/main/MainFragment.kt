@@ -32,9 +32,9 @@ class MainFragment : Fragment() {
 
         binding.viewModel = mainViewModel
 
-        val asteroidAdapter = AsteroidAdapter(AsteroidListener { asteroidId ->
-            Log.i("MainFragment", "asteroid selected $asteroidId")
-            mainViewModel.onAsteroidDetailClicked(asteroidId)
+        val asteroidAdapter = AsteroidAdapter(AsteroidListener { asteroid ->
+            Log.i("MainFragment", "asteroid selected ${asteroid.id}")
+            mainViewModel.onAsteroidDetailClicked(asteroid)
         })
 
         binding.asteroidRecycler.adapter = asteroidAdapter
@@ -45,14 +45,14 @@ class MainFragment : Fragment() {
         mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
                 //Add the asteroids
-                asteroidAdapter.submitList(it)
+                //asteroidAdapter.submitList(it)
             }
         })
 
         mainViewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, Observer { asteroid ->
             asteroid?.let {
-//                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(asteroid))
-//                mainViewModel.onAsteroidDetailNavigated()
+                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(asteroid))
+                mainViewModel.onAsteroidDetailNavigated()
             }
         })
 
