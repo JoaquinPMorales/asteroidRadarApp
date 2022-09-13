@@ -10,7 +10,6 @@ import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants.API_KEY
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.AsteroidApi
-import com.udacity.asteroidradar.api.PictureOfTheDayApi
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.AsteroidDatabaseDao
@@ -70,7 +69,7 @@ class MainViewModel(val database: AsteroidDatabaseDao,
     private fun getPictureOfTheDay(){
         viewModelScope.launch {
             try {
-                var pictureOfTheDay = PictureOfTheDayApi.retrofitService.getPictureOfTheDay(API_KEY)
+                var pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
                 if(pictureOfTheDay.mediaType.equals("image"))
                 {
                     _pictureOfTheDay.value = pictureOfTheDay
