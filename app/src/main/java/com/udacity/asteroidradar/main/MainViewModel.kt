@@ -44,19 +44,20 @@ class MainViewModel(val database: AsteroidDatabaseDao,
     }
 
     init {
-        getPictureOfTheDay()
+        //getPictureOfTheDay()
         getAsteroidsProperties()
     }
 
     private fun getAsteroidsProperties(){
         viewModelScope.launch {
             try {
-                var result = AsteroidApi.retrofitService.getAsteroids("2022-09-07", "2022-09-08", API_KEY)
+                var result = AsteroidApi.retrofitService.getAsteroids("2022-09-16", "2022-09-16", API_KEY)
                 Log.i("MainViewModel", "json: $result")
 
-//                var jsonObject : JSONObject(result)
-//                _listOfAsteroids.value = parseAsteroidsJsonResult(result)
-//                Log.i("MainViewModel", "listOfAsteroids: ${_listOfAsteroids.toString()}")
+                var list = parseAsteroidsJsonResult(JSONObject(result))
+                Log.i("MainViewModel", "listOfAsteroids: ${list.toString()}")
+                Log.i("MainViewModel", "size: ${list.size}")
+                _listOfAsteroids.value = list
             }
             catch (e: Exception)
             {
@@ -77,7 +78,8 @@ class MainViewModel(val database: AsteroidDatabaseDao,
             }
             catch (e: Exception)
             {
-
+                Log.i("MainViewModel", "Error trying to get pictureOfTheDay")
+                Log.i("MainViewModel","exception: ${e.toString()}")
             }
         }
     }

@@ -42,10 +42,11 @@ class MainFragment : Fragment() {
 //        setHasOptionsMenu(true)
         hasOptionsMenu()
 
-        mainViewModel.asteroids.observe(viewLifecycleOwner, Observer {
+        mainViewModel.listOfAsteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
                 //Add the asteroids
-                //asteroidAdapter.submitList(it)
+                Log.i("MainFragment", "first asteroid name: ${it.get(0).codename}")
+                asteroidAdapter.submitList(it)
             }
         })
 

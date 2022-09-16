@@ -41,17 +41,20 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/hazardous_image"
             app:layout_constraintStart_toStartOf="@+id/hazardous_image"
-            app:layout_constraintTop_toBottomOf="@+id/hazardous_image"/>
+            app:layout_constraintTop_toBottomOf="@+id/hazardous_image"
+            android:text="@{asteroid.closeApproachDate}"
+            android:textColor="@color/default_text_color"/>
 
         <TextView
             android:id="@+id/asteroid_name_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/hazardous_image"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="27dp" />
+            tools:layout_editor_absoluteY="27dp"
+            android:text="@{asteroid.codename}"
+            android:textColor="@color/default_text_color"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
