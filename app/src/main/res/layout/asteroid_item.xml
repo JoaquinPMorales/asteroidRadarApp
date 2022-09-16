@@ -18,8 +18,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:onClick="@{() -> clickListener.onClick(asteroid)}">
+        android:onClick="@{() -> clickListener.onClick(asteroid)}"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/hazardous_image"
@@ -31,30 +31,36 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_status_normal"
-            app:statusIcon="@{asteroid.potentiallyHazardous}"/>
+            app:statusIcon="@{asteroid.potentiallyHazardous}"
+            tools:srcCompat="@drawable/ic_status_normal" />
 
         <TextView
             android:id="@+id/asteroid_date_string"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/hazardous_image"
-            app:layout_constraintStart_toStartOf="@+id/hazardous_image"
-            app:layout_constraintTop_toBottomOf="@+id/hazardous_image"
             android:text="@{asteroid.closeApproachDate}"
-            android:textColor="@color/default_text_color"/>
+            android:textColor="@color/default_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/asteroid_name_string"
+            app:layout_constraintTop_toBottomOf="@+id/asteroid_name_string"
+            tools:text="date" />
 
         <TextView
             android:id="@+id/asteroid_name_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/hazardous_image"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="27dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
             android:text="@{asteroid.codename}"
-            android:textColor="@color/default_text_color"/>
+            app:layout_constraintBottom_toTopOf="@+id/asteroid_date_string"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/hazardous_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints"
+            tools:text="asteroid's name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
