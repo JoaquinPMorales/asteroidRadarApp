@@ -10,7 +10,10 @@ import androidx.room.*
 interface AsteroidDatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(asteroid: Asteroid)
+    suspend fun insert(asteroid: AsteroidEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg asteroids: AsteroidEntity)
 
     /**
      * When updating a row with a value already set in a column,
@@ -19,7 +22,7 @@ interface AsteroidDatabaseDao {
      * @param asteroid new value to write
      */
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(asteroid: Asteroid)
+    suspend fun update(asteroid: AsteroidEntity)
 
     /**
      * Selects and returns the row that matches the asteroidId, which is our key.
@@ -27,7 +30,7 @@ interface AsteroidDatabaseDao {
      * @param key asteroidId to match
      */
     @Query("SELECT * from asteroid_radar_table WHERE asteroidId = :key")
-    suspend fun get(key: Long): Asteroid?
+    suspend fun get(key: Long): AsteroidEntity?
 
     /**
      * Deletes all values from the table.
@@ -43,12 +46,12 @@ interface AsteroidDatabaseDao {
      * sorted by start time in descending order.
      */
     @Query("SELECT * FROM asteroid_radar_table ORDER BY close_approach_date DESC")
-    fun getAllAsteroids(): LiveData<List<Asteroid>>
+    fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
 
     /**
      * Selects and returns the asteroid with given asteroidId.
      */
     @Query("SELECT * from asteroid_radar_table WHERE asteroidId = :key")
-    fun getAsteroidWithId(key: Long): LiveData<Asteroid>
+    fun getAsteroidWithId(key: Long): LiveData<AsteroidEntity>
 }
 

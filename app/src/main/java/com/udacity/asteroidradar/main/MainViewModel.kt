@@ -10,21 +10,17 @@ import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants.API_KEY
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.AsteroidApi
+import com.udacity.asteroidradar.api.AsteroidRepository
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.database.AsteroidDatabase.Companion.getInstance
 import com.udacity.asteroidradar.database.AsteroidDatabaseDao
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class MainViewModel(val database: AsteroidDatabaseDao,
-                    application: Application) : AndroidViewModel(application) {
+enum class AsteroidApiStatus { LOADING, ERROR, DONE }
 
-    val asteroids = database.getAllAsteroids()
-
-    private val _listOfAsteroids = MutableLiveData<ArrayList<Asteroid>>()
-
-    val listOfAsteroids : LiveData<ArrayList<Asteroid>>
-        get() = _listOfAsteroids
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _pictureOfTheDay = MutableLiveData<PictureOfDay>()
 
@@ -35,6 +31,17 @@ class MainViewModel(val database: AsteroidDatabaseDao,
     val navigateToAsteroidDetail
         get() = _navigateToAsteroidDetail
 
+    private val database = getInstance(application)
+    private val asteroidRepository = AsteroidRepository(database)
+
+    init {
+        viewModelScope.launch {
+            asteroidRepository.refreshAsteroids()
+        }
+    }
+
+    val asteroidList = asteroidRepository.asteroids
+
     fun onAsteroidDetailClicked(asteroid: Asteroid) {
         _navigateToAsteroidDetail.value = asteroid
     }
@@ -43,45 +50,21 @@ class MainViewModel(val database: AsteroidDatabaseDao,
         _navigateToAsteroidDetail.value = null
     }
 
-    init {
-        //getPictureOfTheDay()
-        getAsteroidsProperties()
-    }
-
-    private fun getAsteroidsProperties(){
-        viewModelScope.launch {
-            try {
-                var result = AsteroidApi.retrofitService.getAsteroids("2022-09-16", "2022-09-16", API_KEY)
-                Log.i("MainViewModel", "json: $result")
-
-                var list = parseAsteroidsJsonResult(JSONObject(result))
-                Log.i("MainViewModel", "listOfAsteroids: ${list.toString()}")
-                Log.i("MainViewModel", "size: ${list.size}")
-                _listOfAsteroids.value = list
-            }
-            catch (e: Exception)
-            {
-                Log.i("MainViewModel", "Error trying to get listOfAsteroids")
-                Log.i("MainViewModel","exception: ${e.toString()}")
-            }
-        }
-    }
-
-    private fun getPictureOfTheDay(){
-        viewModelScope.launch {
-            try {
-                var pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
-                if(pictureOfTheDay.mediaType.equals("image"))
-                {
-                    _pictureOfTheDay.value = pictureOfTheDay
-                }
-            }
-            catch (e: Exception)
-            {
-                Log.i("MainViewModel", "Error trying to get pictureOfTheDay")
-                Log.i("MainViewModel","exception: ${e.toString()}")
-            }
-        }
-    }
+//    private fun getPictureOfTheDay(){
+//        viewModelScope.launch {
+//            try {
+//                var pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
+//                if(pictureOfTheDay.mediaType.equals("image"))
+//                {
+//                    _pictureOfTheDay.value = pictureOfTheDay
+//                }
+//            }
+//            catch (e: Exception)
+//            {
+//                Log.i("MainViewModel", "Error trying to get pictureOfTheDay")
+//                Log.i("MainViewModel","exception: ${e.toString()}")
+//            }
+//        }
+//    }
 
 }

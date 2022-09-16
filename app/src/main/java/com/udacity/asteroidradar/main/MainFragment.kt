@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = AsteroidDatabase.getInstance(application).asteroidDatabaseDao
 
-        val viewModelFactory = MainViewModelFactory(dataSource, application)
+        val viewModelFactory = MainViewModelFactory(application)
         val mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.viewModel = mainViewModel
@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
 //        setHasOptionsMenu(true)
         hasOptionsMenu()
 
-        mainViewModel.listOfAsteroids.observe(viewLifecycleOwner, Observer {
+        mainViewModel.asteroidList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 //Add the asteroids
                 Log.i("MainFragment", "first asteroid name: ${it.get(0).codename}")

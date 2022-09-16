@@ -5,6 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants.BASE_URL
 import com.udacity.asteroidradar.PictureOfDay
+import kotlinx.coroutines.Deferred
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ interface AsteroidApiService {
     @GET("neo/rest/v1/feed")
     suspend fun getAsteroids(@Query("start_date") start_date: String?,
                              @Query("end_date") end_date: String?,
-                             @Query("api_key") api_key: String): String
+                             @Query("api_key") api_key: String): Deferred<String>
 
     @GET("/planetary/apod")
     suspend fun getPictureOfTheDay(@Query("api_key") api_key: String): PictureOfDay

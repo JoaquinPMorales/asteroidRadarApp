@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.udacity.asteroidradar.database.Asteroid
+import com.udacity.asteroidradar.database.AsteroidEntity
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 
 class AsteroidAdapter(val clickListener: AsteroidListener) : ListAdapter<com.udacity.asteroidradar.Asteroid, AsteroidAdapter.ViewHolder>(AsteroidDiffCallback()) {

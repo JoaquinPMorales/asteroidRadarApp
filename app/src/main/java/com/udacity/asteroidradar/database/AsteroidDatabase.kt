@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [Asteroid::class], version = 1, exportSchema = false)
+@Database(entities = [AsteroidEntity::class], version = 1, exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
 
     /**
@@ -37,7 +37,7 @@ abstract class AsteroidDatabase : RoomDatabase() {
          *  thread to shared data are visible to other threads.
          */
         @Volatile
-        private var INSTANCE: AsteroidDatabase? = null
+        private lateinit var INSTANCE: AsteroidDatabase
 
         /**
          * Helper function to get the database.
