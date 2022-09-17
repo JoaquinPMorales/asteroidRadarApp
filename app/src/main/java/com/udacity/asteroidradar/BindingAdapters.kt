@@ -51,3 +51,11 @@ fun bindImageOfTheDay(imageView: ImageView, imgUrl: String?)
         .error(R.drawable.ic_broken_image)
         .into(imageView);
 }
+
+@BindingAdapter("pictureOfTheDayTitle")
+fun bindImageOfTheDayTitle(imageView: ImageView, title: String?){
+    if (title != null)
+    {
+        imageView.contentDescription = String.format(imageView.context.getString(R.string.nasa_picture_of_day_content_description_format), title)
+    }
+}

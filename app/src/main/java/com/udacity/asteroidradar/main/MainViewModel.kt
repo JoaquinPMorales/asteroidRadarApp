@@ -22,21 +22,17 @@ enum class AsteroidApiStatus { LOADING, ERROR, DONE }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _pictureOfTheDay = MutableLiveData<PictureOfDay>()
-
-    val pictureOfTheDay: LiveData<PictureOfDay>
-        get() = _pictureOfTheDay
-
     private val _navigateToAsteroidDetail = MutableLiveData<Asteroid>()
     val navigateToAsteroidDetail
         get() = _navigateToAsteroidDetail
 
     private val database = getInstance(application)
-    private val asteroidRepository = AsteroidRepository(database)
+    val asteroidRepository = AsteroidRepository(database)
 
     init {
         viewModelScope.launch {
             asteroidRepository.refreshAsteroids()
+            //asteroidRepository.refreshPictureOfTheDay()
         }
     }
 
@@ -49,22 +45,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onAsteroidDetailNavigated() {
         _navigateToAsteroidDetail.value = null
     }
-
-//    private fun getPictureOfTheDay(){
-//        viewModelScope.launch {
-//            try {
-//                var pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
-//                if(pictureOfTheDay.mediaType.equals("image"))
-//                {
-//                    _pictureOfTheDay.value = pictureOfTheDay
-//                }
-//            }
-//            catch (e: Exception)
-//            {
-//                Log.i("MainViewModel", "Error trying to get pictureOfTheDay")
-//                Log.i("MainViewModel","exception: ${e.toString()}")
-//            }
-//        }
-//    }
 
 }

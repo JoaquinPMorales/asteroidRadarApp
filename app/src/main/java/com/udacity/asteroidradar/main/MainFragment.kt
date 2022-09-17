@@ -25,7 +25,7 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(this.activity).application
-        val dataSource = AsteroidDatabase.getInstance(application).asteroidDatabaseDao
+//        val dataSource = AsteroidDatabase.getInstance(application).asteroidDatabaseDao
 
         val viewModelFactory = MainViewModelFactory(application)
         val mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
