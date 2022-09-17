@@ -42,7 +42,7 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
             }
         }
     }
-
+    Log.i("NetworkUtils", "asteroidList size: ${asteroidList.size}")
     return asteroidList
 }
 

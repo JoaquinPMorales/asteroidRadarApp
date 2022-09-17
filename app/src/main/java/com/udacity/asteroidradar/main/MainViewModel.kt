@@ -18,8 +18,6 @@ import com.udacity.asteroidradar.database.AsteroidDatabaseDao
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-enum class AsteroidApiStatus { LOADING, ERROR, DONE }
-
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _navigateToAsteroidDetail = MutableLiveData<Asteroid>()
@@ -28,14 +26,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getInstance(application)
     val asteroidRepository = AsteroidRepository(database)
+    val asteroidList = asteroidRepository.asteroids
 
     init {
         viewModelScope.launch {
             asteroidRepository.refreshAll()
         }
     }
-
-    val asteroidList = asteroidRepository.asteroids
 
     fun onAsteroidDetailClicked(asteroid: Asteroid) {
         _navigateToAsteroidDetail.value = asteroid

@@ -32,10 +32,6 @@ class AsteroidAdapter(val clickListener: AsteroidListener) : ListAdapter<com.uda
             binding.asteroid = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
-            /*binding.hazardousImage.setImageResource(when(item.isPotentiallyHazardous){
-                false -> R.drawable.ic_status_normal
-                true -> R.drawable.ic_status_potentially_hazardous
-            })*/
         }
 
         companion object{

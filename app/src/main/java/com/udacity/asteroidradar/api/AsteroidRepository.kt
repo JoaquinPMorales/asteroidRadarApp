@@ -21,9 +21,10 @@ import java.net.UnknownHostException
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
 
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDatabaseDao.getAllAsteroids()) {
-        it.asDomainModel()
-    }
+    val asteroids: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidDatabaseDao.getAllAsteroids()) {
+            it.asDomainModel()
+        }
 
     private var _pictureOfTheDay = MutableLiveData<String>()
     val pictureOfTheDay: LiveData<String>
@@ -37,8 +38,10 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         withContext(Dispatchers.IO) {
             var result = AsteroidApi.retrofitService.getAsteroids(
                                     "2022-09-16", "2022-09-16", Constants.API_KEY)
-            Log.i("MainViewModel", "json: $result")
+            Log.i("AsteroidRepository", "json: $result")
             var list = parseAsteroidsJsonResult(JSONObject(result))
+            Log.i("AsteroidRepository", "parseAsteroids finished, now to DB")
+            Log.i("AsteroidRepository", "list size: ${list.size}")
             database.asteroidDatabaseDao.insertAll(*list.asDomainModel())
         }
     }

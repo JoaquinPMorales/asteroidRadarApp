@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("statusIcon")
@@ -58,4 +59,13 @@ fun bindImageOfTheDayTitle(imageView: ImageView, title: String?){
     {
         imageView.contentDescription = String.format(imageView.context.getString(R.string.nasa_picture_of_day_content_description_format), title)
     }
+}
+
+@BindingAdapter("listOfAsteroids")
+fun bindListOfAsteroids(recyclerView: RecyclerView, asteroidList: List<Asteroid>?)
+{
+    Log.i("BindingAdapters", "inside bindListOfAsteroids")
+    val adapter = recyclerView.adapter as AsteroidAdapter
+    Log.i("BindingAdapters", "asteroidList size: ${asteroidList?.size}")
+    adapter.submitList(asteroidList)
 }
