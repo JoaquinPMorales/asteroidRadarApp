@@ -14,6 +14,10 @@ import com.udacity.asteroidradar.database.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import retrofit2.HttpException
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
 
@@ -32,7 +36,7 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
     suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
             var result = AsteroidApi.retrofitService.getAsteroids(
-                                    "2022-09-16", "2022-09-16", Constants.API_KEY).await()
+                                    "2022-09-16", "2022-09-16", Constants.API_KEY)
             Log.i("MainViewModel", "json: $result")
             var list = parseAsteroidsJsonResult(JSONObject(result))
             database.asteroidDatabaseDao.insertAll(*list.asDomainModel())
@@ -41,12 +45,28 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     suspend fun refreshPictureOfTheDay() {
         withContext(Dispatchers.IO) {
-            var pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
+            Log.i("AndroidRepository", "refreshPictureOfTheDay")
+            val pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
             _pictureOfTheDayTittle.postValue(pictureOfTheDay.title)
             if(pictureOfTheDay.mediaType.equals("image"))
             {
-                _pictureOfTheDay.postValue(pictureOfTheDay.toString())
+                _pictureOfTheDay.postValue(pictureOfTheDay.url)
             }
+        }
+    }
+
+    suspend fun refreshAll() {
+        try {
+            refreshPictureOfTheDay()
+            refreshAsteroids()
+        } catch (e: HttpException) {
+            Log.e("AsteroidRepository", "HttpException ${e.message()}")
+        } catch (e: SocketException) {
+            Log.e("AsteroidRepository", "SocketException ${e.message}")
+        } catch (e: SocketTimeoutException) {
+            Log.e("AsteroidRepository", "SocketTimeoutException ${e.message}")
+        } catch (e: UnknownHostException) {
+            Log.e("AsteroidRepository", "UnknownHostException ${e.message}")
         }
     }
 }

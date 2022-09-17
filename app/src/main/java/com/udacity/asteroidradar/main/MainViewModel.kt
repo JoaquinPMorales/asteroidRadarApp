@@ -31,8 +31,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            asteroidRepository.refreshAsteroids()
-            //asteroidRepository.refreshPictureOfTheDay()
+            asteroidRepository.refreshAll()
         }
     }
 

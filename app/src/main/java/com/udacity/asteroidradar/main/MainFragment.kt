@@ -45,8 +45,8 @@ class MainFragment : Fragment() {
         mainViewModel.asteroidList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 //Add the asteroids
-                Log.i("MainFragment", "first asteroid name: ${it.get(0).codename}")
-                asteroidAdapter.submitList(it)
+//                Log.i("MainFragment", "first asteroid name: ${it.get(0).codename}")
+//                asteroidAdapter.submitList(it)
             }
         })
 
