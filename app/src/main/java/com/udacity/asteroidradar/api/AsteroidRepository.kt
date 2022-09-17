@@ -34,19 +34,20 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
     val pictureOfTheDayTittle: LiveData<String>
         get() = _pictureOfTheDayTittle
 
-    suspend fun refreshAsteroids() {
+    private suspend fun refreshAsteroids() {
         withContext(Dispatchers.IO) {
             var result = AsteroidApi.retrofitService.getAsteroids(
-                                    "2022-09-16", "2022-09-16", Constants.API_KEY)
+                                    "2022-09-16", "2022-09-17", Constants.API_KEY)
             Log.i("AsteroidRepository", "json: $result")
             var list = parseAsteroidsJsonResult(JSONObject(result))
             Log.i("AsteroidRepository", "parseAsteroids finished, now to DB")
             Log.i("AsteroidRepository", "list size: ${list.size}")
+            database.asteroidDatabaseDao.clear()
             database.asteroidDatabaseDao.insertAll(*list.asDomainModel())
         }
     }
 
-    suspend fun refreshPictureOfTheDay() {
+    private suspend fun refreshPictureOfTheDay() {
         withContext(Dispatchers.IO) {
             Log.i("AndroidRepository", "refreshPictureOfTheDay")
             val pictureOfTheDay = AsteroidApi.retrofitService.getPictureOfTheDay(API_KEY)
