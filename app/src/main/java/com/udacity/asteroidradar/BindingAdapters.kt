@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Callback
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("statusIcon")
@@ -48,9 +50,19 @@ fun bindImageOfTheDay(imageView: ImageView, imgUrl: String?)
 {
     Picasso.get()
         .load(imgUrl)
-        .placeholder(R.drawable.placeholder_picture_of_day)
-        .error(R.drawable.ic_broken_image)
-        .into(imageView);
+        .networkPolicy(NetworkPolicy.OFFLINE)
+        .into(imageView, object : Callback {
+            override fun onSuccess() {}
+            override fun onError(e: Exception?) {
+                Log.e("bindImageOfTheDay", "onError: ${e?.message}")
+                // Try again online if cache failed
+                Picasso.get()
+                    .load(imgUrl)
+                    .placeholder(R.drawable.placeholder_picture_of_day)
+                    .error(R.drawable.ic_broken_image)
+                    .into(imageView)
+            }
+        })
 }
 
 @BindingAdapter("pictureOfTheDayTitle")

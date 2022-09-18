@@ -10,25 +10,22 @@ import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.AsteroidAdapter
 import com.udacity.asteroidradar.AsteroidListener
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.api.DateFilterOptions
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-//    private val viewModel: MainViewModel by lazy {
-//        ViewModelProvider(this).get(MainViewModel::class.java)
-//    }
+    private val mainViewModel: MainViewModel by lazy {
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = MainViewModelFactory(application)
+        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
-        val application = requireNotNull(this.activity).application
-//        val dataSource = AsteroidDatabase.getInstance(application).asteroidDatabaseDao
-
-        val viewModelFactory = MainViewModelFactory(application)
-        val mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding.viewModel = mainViewModel
 
@@ -40,15 +37,7 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = asteroidAdapter
 
 //        setHasOptionsMenu(true)
-        hasOptionsMenu()
-
-//        mainViewModel.asteroidList.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                //Add the asteroids
-//                Log.i("MainFragment", "first asteroid name: ${it.get(0).codename}")
-//                asteroidAdapter.submitList(it)
-//            }
-//        })
+        setHasOptionsMenu(true)
 
         mainViewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, Observer { asteroid ->
             asteroid?.let {
@@ -66,6 +55,13 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        mainViewModel.asteroidRepository.updateFilter(
+            when (item.itemId) {
+                R.id.show_all_menu -> DateFilterOptions.SHOW_WEEK
+                R.id.show_today_menu -> DateFilterOptions.SHOW_TODAY
+                else -> DateFilterOptions.SHOW_ALL
+            }
+        )
         return true
     }
 }

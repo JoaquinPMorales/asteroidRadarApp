@@ -48,10 +48,19 @@ interface AsteroidDatabaseDao {
     @Query("SELECT * FROM asteroid_radar_table ORDER BY close_approach_date")
     fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
 
+    @Query("SELECT * FROM asteroid_radar_table WHERE close_approach_date = :date ORDER BY close_approach_date")
+    fun getDayAsteroids(date: String): LiveData<List<AsteroidEntity>>
+
+    @Query("SELECT * FROM asteroid_radar_table WHERE close_approach_date >= :startDate & close_approach_date <= :endDate ORDER BY close_approach_date")
+    fun getWeekAsteroids(startDate: String, endDate: String): LiveData<List<AsteroidEntity>>
+
     /**
      * Selects and returns the asteroid with given asteroidId.
      */
     @Query("SELECT * from asteroid_radar_table WHERE asteroidId = :key")
     fun getAsteroidWithId(key: Long): LiveData<AsteroidEntity>
+
+    @Query("DELETE from asteroid_radar_table where close_approach_date < :date")
+    fun clearUntilDate(date: String): Int
 }
 
