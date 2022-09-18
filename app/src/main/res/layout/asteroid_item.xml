@@ -34,6 +34,7 @@
             app:layout_constraintStart_toEndOf="@+id/asteroid_name_string"
             app:layout_constraintTop_toTopOf="@+id/asteroid_name_string"
             app:statusIcon="@{asteroid.potentiallyHazardous}"
+            android:contentDescription="@{ asteroid.potentiallyHazardous ? @string/potentially_hazardous_asteroid_image: @string/not_hazardous_asteroid_image}"
             tools:srcCompat="@drawable/ic_status_normal" />
 
         <TextView

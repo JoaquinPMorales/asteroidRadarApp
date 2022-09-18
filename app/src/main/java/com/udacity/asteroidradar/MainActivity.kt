@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
-            .setRequiresBatteryNotLow(true)
             .setRequiresCharging(true)
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
