@@ -6,12 +6,11 @@ apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion "29.0.3"
+    compileSdk 33
     defaultConfig {
         applicationId "com.udacity.asteroidradar"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -69,7 +68,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
 
-    implementation "android.arch.work:work-runtime-ktx:1.0.1"
+//    implementation "android.arch.work:work-runtime-ktx:1.0.1"
+    implementation "androidx.work:work-runtime:$work_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

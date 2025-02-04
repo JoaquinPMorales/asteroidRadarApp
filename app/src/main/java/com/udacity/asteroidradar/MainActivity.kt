@@ -4,10 +4,11 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.*
-import com.udacity.asteroidradar.work.RefreshDataWorker
+//import com.udacity.asteroidradar.work.RefreshDataWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -34,14 +35,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }.build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.DAYS)
-            .setConstraints(constraints)
-            .build()
-
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
-            RefreshDataWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest)
+//        val repeatingRequest = PeriodicWorkRequest.Builder(RefreshDataWorker, Duration.ofDays(1))
+//            .setConstraints(constraints)
+//            .build()
+//
+//        WorkManager.getInstance().enqueueUniquePeriodicWork(
+//            RefreshDataWorker.WORK_NAME,
+//            ExistingPeriodicWorkPolicy.KEEP,
+//            repeatingRequest)
 
     }
 }

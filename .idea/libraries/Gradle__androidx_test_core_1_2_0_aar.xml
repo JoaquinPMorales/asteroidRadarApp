@@ -1,11 +1,8 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.test:core:1.2.0@aar">
+  <library name="Gradle: androidx.test:core:1.2.0@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a970956ffa1da76e740ebcbfa75e6ead/transformed/jetified-core-1.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a8c46860df63b438abc6d637ee0335f1/transformed/jetified-core-1.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9f890b4e14e57b06dffcb029d02b0ca6/transformed/jetified-core-1.2.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9f890b4e14e57b06dffcb029d02b0ca6/transformed/jetified-core-1.2.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9f890b4e14e57b06dffcb029d02b0ca6/transformed/jetified-core-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/78300dacb49f67e0620ff46d8b8cd17c/transformed/jetified-core-1.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/78300dacb49f67e0620ff46d8b8cd17c/transformed/jetified-core-1.2.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test/core/1.2.0/ed921186cfb809317daf41ccf8e6acc5dcea0e06/core-1.2.0-javadoc.jar!/" />
